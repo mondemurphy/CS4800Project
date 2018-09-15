@@ -8,10 +8,11 @@ public class PlayerController : PhysicsObject {
     public float jumpTakeOffSpeed = 7f;
     public float jumpForce = 1000f;
     public Rigidbody2D projectile;
+    Vector3 moves = Vector3.zero;
 
     private SpriteRenderer spriteRenderer;
     private Animator animator;
-
+ 
     // Use this for initialization
     void Awake()
     {
@@ -24,9 +25,11 @@ public class PlayerController : PhysicsObject {
     {
         if (Input.GetButtonDown("Jump") && grounded)
         {
+            moves = transform.position;
+            moves.y += 1f;
             animator.SetTrigger("knightJump");
             rb2d.AddForce(new Vector2(0f, jumpForce));
-            rb2d.MovePosition(velocity);
+            transform.position = moves;
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -49,19 +52,44 @@ public class PlayerController : PhysicsObject {
             animator.SetTrigger("knightWalk");
         }
 
-        var x = Input.GetAxis("Horizontal") * Time.deltaTime * 150.0f;
-        var z = Input.GetAxis("Vertical") * Time.deltaTime * 3.0f;
-
-        transform.Rotate(0, x, 0);
-        transform.Translate(0, 0, z);
-
         if (Input.GetButtonDown("Fire3"))
         {
             animator.SetTrigger("knightCast");
-            Rigidbody2D clone;
+        }
 
-            clone = Instantiate(projectile, transform.position, transform.rotation) as Rigidbody2D;
-            clone.velocity = transform.TransformDirection(Vector3.forward * 10);
+        if (Input.GetKey(KeyCode.A))
+        {
+            spriteRenderer.flipX = true;
+            moves = transform.position;
+            moves.x -= .01f;
+            transform.position = moves;
+        }
+
+        if (Input.GetKey(KeyCode.D))
+        {
+            spriteRenderer.flipX = false;
+            moves = transform.position;
+            moves.x += .01f;
+            transform.position = moves;
+        }
+
+        if (Input.GetKey(KeyCode.W))
+        {
+            moves = transform.position;
+            moves.z += .01f;
+            transform.position = moves;
+        }
+
+        if (Input.GetKey(KeyCode.S))
+        {
+            moves = transform.position;
+            moves.z -= .01f;
+            transform.position = moves;
+        }
+
+        if (Input.GetButtonUp("Horizontal") || Input.GetButtonUp("Vertical"))
+        {
+            animator.SetTrigger("knightStop");
         }
         
     }
@@ -70,7 +98,7 @@ public class PlayerController : PhysicsObject {
     {
         Vector2 move = Vector2.zero;
 
-        move.x = Input.GetAxis("Horizontal");
+        move.x += Input.GetAxis("Horizontal");
 
         if (Input.GetButtonDown("Jump") && grounded)
         {
@@ -82,12 +110,6 @@ public class PlayerController : PhysicsObject {
             {
                 velocity.y = velocity.y * 0.5f;
             }
-        }
-
-        bool flipSprite = (spriteRenderer.flipX ? (move.x > 0.01f) : (move.x < 0.01f));
-        if (flipSprite)
-        {
-            spriteRenderer.flipX = !spriteRenderer.flipX;
         }
 
         animator.SetBool("grounded", grounded);
