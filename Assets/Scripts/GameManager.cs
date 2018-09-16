@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
-    public int HP = 100;
+    public static int HP = 100;
 
 	// Use this for initialization
 	void Start () {
@@ -13,6 +13,14 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (HP == 0)
+        {
+            GameOver();
+        }
 	}
+
+    void GameOver()
+    {
+
+    }
 }

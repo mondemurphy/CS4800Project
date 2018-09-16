@@ -4,28 +4,32 @@ using UnityEngine;
 
 public class KnightController : MonoBehaviour {
 
+    public LayerMask BlockingLayer;
+
     // Normal Movements Variables
+    private BoxCollider2D boxCollider;
     private float walkSpeed;
     private float sprintSpeed;
     private float curSpeed;
     private float maxSpeed;
     private Rigidbody2D rb2d;
-    Vector3 move = Vector3.zero;
-    Animator anim;
-    SpriteRenderer spriteRenderer;
+    private Vector3 move = Vector3.zero;
+    private Animator anim;
+    private SpriteRenderer spriteRenderer;
 
     private CharacterStat plStat;
 
     void Start()
     {
+        boxCollider = GetComponent<BoxCollider2D>();
         plStat = GetComponent<CharacterStat>();
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        GameManager.HP = 100;
 
         walkSpeed = (float)(plStat.Speed + (plStat.Agility / 5));
         sprintSpeed = walkSpeed + (walkSpeed / 2);
-
     }
 
     void Update()
@@ -89,5 +93,15 @@ public class KnightController : MonoBehaviour {
         {
             anim.SetTrigger("knightStop");
         }
+
+        if (GameManager.HP == 0)
+        {
+            anim.SetTrigger("knightDie");
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        
     }
 }
