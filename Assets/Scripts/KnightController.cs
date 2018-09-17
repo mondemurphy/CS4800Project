@@ -26,7 +26,6 @@ public class KnightController : MonoBehaviour {
         rb2d = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        GameManager.HP = 100;
 
         walkSpeed = (float)(plStat.Speed + (plStat.Agility / 5));
         sprintSpeed = walkSpeed + (walkSpeed / 2);
