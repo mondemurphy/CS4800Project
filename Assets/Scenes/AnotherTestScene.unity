@@ -20260,7 +20260,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1050
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< HEAD
 --- !u!50 &557853576
 Rigidbody2D:
   serializedVersion: 4
@@ -20309,8 +20308,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.3}
   serializedVersion: 2
   m_Radius: 0.5
-=======
->>>>>>> parent of c1c0443... Merge branch 'master' of https://github.com/zfrye06/Dungeon-Crawler
 --- !u!1 &558798188
 GameObject:
   m_ObjectHideFlags: 0
