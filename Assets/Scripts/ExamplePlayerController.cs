@@ -23,30 +23,45 @@ public class ExamplePlayerController : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
+        Vector2 vPos = tBody.transform.position;
         tAnim.SetBool("Walking", false);
-        UpdateOnGround();
+        tAnim.SetBool("Attacking", false);
 
-        if (Input.GetButton("Horizontal") && bOnGround)
+        if(Input.GetMouseButtonDown(0))
         {
-            float flDirection = Input.GetAxis("Horizontal");
-            tSprite.flipX = flDirection > 0 ? false : true;
-            tBody.velocity = new Vector2(flDirection * flWalkingSpeed, 0);
+            tAnim.Play("Attack");
+        }
+
+        float flHorizontalDirection = Input.GetAxis("Horizontal");
+        float flVerticalDirection = Input.GetAxis("Vertical");
+
+        float flMultiplier = (Mathf.Abs(flHorizontalDirection) > .5f && Mathf.Abs(flVerticalDirection) > .5f) ? .7f : 1.0f;
+
+        if (flHorizontalDirection != 0)
+        {
+            int nDirection = Input.GetAxis("Horizontal") > 0 ? 1 : -1;
+            vPos.x += (nDirection * flWalkingSpeed * Time.fixedDeltaTime * flMultiplier);
+
+            UpdateRotation(nDirection);
+            tAnim.SetBool("Walking", true);
+        }
+
+        if(flVerticalDirection != 0)
+        {
+            int nDirection = Input.GetAxis("Vertical") > 0 ? 1 : -1;
+            vPos.y += (nDirection * flWalkingSpeed * Time.deltaTime * flMultiplier);
 
             tAnim.SetBool("Walking", true);
         }
-	}
 
-    private void UpdateOnGround()
+        tBody.MovePosition(vPos);
+    }
+
+    private void UpdateRotation (int nDirection)
     {
-        bOnGround = false;
-        tBody.drag = 0;
-        Vector2 vPos = transform.position;
-        vPos.y -= 1.3f;
-        if (Physics2D.Raycast(transform.position, new Vector2(0, -1), 1))
-        {
-            bOnGround = true;
-            tBody.drag = flDrag;
-        }
+        Vector3 vRot = transform.eulerAngles;
+        vRot.y = nDirection > 0 ? 0 : 180;
+        transform.eulerAngles = vRot;
     }
 }
