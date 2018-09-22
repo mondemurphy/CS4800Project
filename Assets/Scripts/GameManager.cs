@@ -8,19 +8,16 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+        
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (HP == 0)
-        {
-            GameOver();
-        }
+		
 	}
 
     void GameOver()
     {
-
+        Debug.Log("You win!");
     }
 }
