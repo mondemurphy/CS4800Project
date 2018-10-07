@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ExamplePlayerController : MonoBehaviour {
 
     public float flWalkingSpeed = 1.0f;
+    public int nextLevel = 1;
 
     private Rigidbody2D tBody;
     private bool bOnGround = false;
@@ -64,4 +66,36 @@ public class ExamplePlayerController : MonoBehaviour {
         vRot.y = nDirection > 0 ? 0 : 180;
         transform.eulerAngles = vRot;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.tag == "LevelChanger")
+        {
+            enabled = false;
+            SceneManager.LoadScene(nextLevel);
+        }
+
+        if(collision.tag == "HealthPotion")
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                if(Health.currentHealth == Health.maxHealth)
+                {
+                    break;
+                }
+                else
+                {
+                    Health.currentHealth += 1;
+                }
+            }
+            Destroy(collision.gameObject);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Sprite Open = Resources.Load<Sprite>("Assets/2D Hand Painted - Dungeon Tileset/Tilemaps/Dungeon@128x128_238.png"); ;
+        collision.gameObject.GetComponent<SpriteRenderer>().sprite = Open;
+    }
+
 }

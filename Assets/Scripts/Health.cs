@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class Health : MonoBehaviour
 {
-    public const int maxHealth = 100;
-    public int currentHealth = maxHealth;
+    public const int maxHealth = 20;
+    public static int currentHealth = maxHealth;
 
     private Animator anim;
     private Rigidbody2D rb2d;
+    private 
 
     void Start()
     {
@@ -24,6 +27,14 @@ public class Health : MonoBehaviour
             anim.SetBool("Dead", true);
             rb2d.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
             Debug.Log("Dead!");
+            StartCoroutine("Wait");
         }
+    }
+
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(2);
+        Health.currentHealth = Health.maxHealth;
+        SceneManager.LoadScene(1);
     }
 }

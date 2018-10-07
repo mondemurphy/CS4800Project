@@ -34,6 +34,14 @@ public class FrogController : MonoBehaviour
             transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
             anim.SetBool("Walking", true);
         }
+        if (Health.currentHealth == 0)
+        {
+            enabled = false;
+        }
+        else
+        {
+            enabled = true;
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)

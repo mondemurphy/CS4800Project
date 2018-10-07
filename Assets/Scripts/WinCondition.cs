@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WinCondition : MonoBehaviour {
 
@@ -19,7 +20,14 @@ public class WinCondition : MonoBehaviour {
         {
             anim.SetBool("Win", true);
             rb2d.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
+            Invoke("ReturnHome", 2f);
         }
+    }
+
+    private void ReturnHome()
+    {
+        enabled = false;
+        SceneManager.LoadScene("Home");
     }
 }
  
