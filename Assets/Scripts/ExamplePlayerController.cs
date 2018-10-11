@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 public class ExamplePlayerController : MonoBehaviour {
 
     public float flWalkingSpeed = 1.0f;
-    public int nextLevel = 1;
 
     private Rigidbody2D tBody;
     private bool bOnGround = false;
@@ -69,12 +68,6 @@ public class ExamplePlayerController : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "LevelChanger")
-        {
-            enabled = false;
-            SceneManager.LoadScene(nextLevel);
-        }
-
         if(collision.tag == "HealthPotion")
         {
             for (int i = 0; i < 10; i++)
@@ -90,12 +83,24 @@ public class ExamplePlayerController : MonoBehaviour {
             }
             Destroy(collision.gameObject);
         }
+
+        if (collision.tag == "Key")
+        {
+            collision.gameObject.GetComponent<SpriteRenderer>().sprite = null;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Sprite Open = Resources.Load<Sprite>("Assets/2D Hand Painted - Dungeon Tileset/Tilemaps/Dungeon@128x128_238.png"); ;
-        collision.gameObject.GetComponent<SpriteRenderer>().sprite = Open;
+        if (collision.gameObject.tag=="Door")
+        {
+            if (GameObject.Find("Key") || GameObject.Find("Key(Clone)"))
+            {
+                Destroy(collision.gameObject);
+                Destroy(GameObject.Find("Black").gameObject);
+                Destroy(GameObject.Find("BehindDoor").gameObject);
+            }
+        }
     }
 
 }

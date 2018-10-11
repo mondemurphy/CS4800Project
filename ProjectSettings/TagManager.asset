@@ -9,6 +9,8 @@ TagManager:
   - DangerousTile
   - HealthPotion
   - Chest
+  - Door
+  - Key
   layers:
   - Default
   - TransparentFX
