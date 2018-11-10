@@ -53,6 +53,7 @@ public class FrogController : MonoBehaviour
             health.TakeDamage(10);
         }
 
+        hit.GetComponent<Experience>().GainExp(3);
         Destroy(gameObject);
     }
 }

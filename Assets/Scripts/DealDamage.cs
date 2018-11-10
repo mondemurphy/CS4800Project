@@ -27,7 +27,12 @@ public class DealDamage : StateMachineBehaviour {
             Collider2D[] arEnemies = Physics2D.OverlapCircleAll(location, .25f);
             foreach(Collider2D enemy in arEnemies)
             {
-                Destroy(enemy.gameObject);
+                if (enemy.tag == "Enemy")
+                {
+                    Destroy(enemy.gameObject);
+                    GameObject.Find("Knight").GetComponent<Experience>().GainExp(3);
+                }
+               
             }
         }
 	}
