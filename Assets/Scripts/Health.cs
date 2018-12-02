@@ -12,6 +12,7 @@ public class Health : MonoBehaviour
     public float flashSpeed = 5f;
     public Color flashColor = new Color(1f, 0f, 0f, 0.1f);
     public bool damaged;
+    public AudioClip dead;
 
     private Animator anim;
     private Rigidbody2D rb2d;
@@ -34,6 +35,11 @@ public class Health : MonoBehaviour
         }
         damaged = false;
 
+        if (currentHealth <= 0)
+        {
+            PlaySound();
+        }
+
         healthSlider.value = currentHealth;
     }
 
@@ -52,9 +58,18 @@ public class Health : MonoBehaviour
         }
     }
 
+    void PlaySound()
+    {
+        if (!gameObject.GetComponent<AudioSource>().isPlaying)
+        {
+            GetComponent<AudioSource>().clip = dead;
+            GetComponent<AudioSource>().Play();
+        }
+    }
+
     IEnumerator Wait()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(3);
         Health.currentHealth = Health.maxHealth;
         SceneManager.LoadScene(1);
     }

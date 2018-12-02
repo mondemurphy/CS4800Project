@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 public class ExamplePlayerController : MonoBehaviour {
 
     public float flWalkingSpeed = 1.0f;
+    public AudioClip swing;
+    public static bool dungeon1 = false;
+    public GameObject fireballNote;
 
     private Rigidbody2D tBody;
     private bool bOnGround = false;
@@ -13,6 +16,7 @@ public class ExamplePlayerController : MonoBehaviour {
     private SpriteRenderer tSprite;
     private float flDrag;
     private CapsuleCollider2D tCollider;
+    private AudioSource audio;
 
 	// Use this for initialization
 	void Start () {
@@ -20,6 +24,7 @@ public class ExamplePlayerController : MonoBehaviour {
         tAnim = GetComponent<Animator>();
         tSprite = GetComponent<SpriteRenderer>();
         tCollider = GetComponent<CapsuleCollider2D>();
+        audio = GetComponent<AudioSource>();
         flDrag = tBody.drag;
 	}
 	
@@ -32,6 +37,8 @@ public class ExamplePlayerController : MonoBehaviour {
         if(Input.GetMouseButtonDown(0))
         {
             tAnim.Play("Attack");
+            audio.clip = swing;
+            audio.Play();
         }
 
         float flHorizontalDirection = Input.GetAxis("Horizontal");
@@ -57,6 +64,17 @@ public class ExamplePlayerController : MonoBehaviour {
         }
 
         tBody.MovePosition(vPos);
+
+        if (dungeon1 == true)
+        {
+            Fireball.unlockFireball = true;
+        }
+
+        if (dungeon1 == true && SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(1))
+        {
+            Instantiate(fireballNote, transform.position, Quaternion.identity);
+            dungeon1 = false;
+        }
     }
 
     private void UpdateRotation (int nDirection)

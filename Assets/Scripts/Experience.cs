@@ -16,6 +16,8 @@ public class Experience : MonoBehaviour {
     //modifier that increases needed exp each level
     public static float vExpMod = 1.15f;
 
+    public AudioClip lvlup;
+
     public Text text;
 
     private string gui = "";
@@ -46,6 +48,9 @@ public class Experience : MonoBehaviour {
         float t = Mathf.Pow(vExpMod, vLevel);
         vExpLeft = (int)Mathf.Floor(vExpBase * t);
         gui = "Level Up!";
+
+        gameObject.GetComponent<AudioSource>().clip = lvlup;
+        gameObject.GetComponent<AudioSource>().Play();
     }
 
     void OnGUI()

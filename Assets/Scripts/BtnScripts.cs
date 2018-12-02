@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class BtnScripts : MonoBehaviour {
-
-	// Use this for initialization
+	
 	public void NewGame () {
         Game game = new Game();
         Game.current = game;

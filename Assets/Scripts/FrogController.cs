@@ -6,6 +6,7 @@ public class FrogController : MonoBehaviour
 {
     public float speed;
     public float stoppingDistance;
+    public AudioClip hurt;
 
     private Transform target;
     private Rigidbody2D rb2d;
@@ -47,13 +48,21 @@ public class FrogController : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         var hit = collision.gameObject;
+        var audio = hit.GetComponent<AudioSource>();
         var health = hit.GetComponent<Health>();
         if (health != null)
         {
             health.TakeDamage(10);
+            audio.clip = hurt;
+            audio.Play();
         }
 
         hit.GetComponent<Experience>().GainExp(3);
+        Destroy(gameObject);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
         Destroy(gameObject);
     }
 }

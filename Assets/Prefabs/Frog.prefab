@@ -120,6 +120,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1
   stoppingDistance: 0
+  hurt: {fileID: 8300000, guid: 1708e2573acd26042916cef9d2dff691, type: 3}
 --- !u!212 &212477042569072062
 SpriteRenderer:
   m_ObjectHideFlags: 1

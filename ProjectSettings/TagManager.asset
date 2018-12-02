@@ -12,6 +12,9 @@ TagManager:
   - Door
   - Key
   - Enemy
+  - Music
+  - Projectile
+  - Destroyable
   layers:
   - Default
   - TransparentFX
