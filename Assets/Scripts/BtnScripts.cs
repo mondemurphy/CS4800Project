@@ -16,6 +16,7 @@ public class BtnScripts : MonoBehaviour {
         SaveLoad.Load();
         Experience.vLevel = SaveLoad.savedGames[SaveLoad.savedGames.Count - 1].knight.level;
         Health.currentHealth = SaveLoad.savedGames[SaveLoad.savedGames.Count - 1].knight.health;
+        Fireball.unlockFireball = SaveLoad.savedGames[SaveLoad.savedGames.Count - 1].fireballUnlocked;
         SceneManager.LoadScene(SaveLoad.savedGames[SaveLoad.savedGames.Count - 1].scene);
     }
 
@@ -23,6 +24,7 @@ public class BtnScripts : MonoBehaviour {
     {
         Game.current.knight.health = Health.currentHealth;
         Game.current.knight.level = Experience.vLevel;
+        Game.current.fireballUnlocked = Fireball.unlockFireball;
         Game.current.scene = SceneManager.GetActiveScene().buildIndex;
         SaveLoad.Save();
     }

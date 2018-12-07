@@ -8,6 +8,7 @@ public class Game
     public static Game current;
     public Character knight;
     public int scene;
+    public bool fireballUnlocked;
     //public Character rogue;
     //public Character wizard;
 
